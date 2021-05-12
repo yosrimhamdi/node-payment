@@ -1,10 +1,12 @@
 const express = require('express');
-const paypal = require('paypal');
+const init = require('../controllers/init');
+const success = require('../controllers/success');
+const failed = require('../controllers/failed');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
-  res.send('will pay here');
-});
+router.get('/', init);
+router.get('/success', success);
+router.get('/failed', failed);
 
 module.exports = router;
