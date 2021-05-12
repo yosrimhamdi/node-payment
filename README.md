@@ -1,2 +1,2 @@
 # node-payment
-payment with node stipe
+payment with node stripe
