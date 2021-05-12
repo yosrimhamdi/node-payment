@@ -1,2 +1,3 @@
 # node-payment
-payment with node stripe
+
+payment with paypal using node
