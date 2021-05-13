@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
   const domain = `${req.protocol}://${req.get('host')}`;
 
-  var config = {
+  const config = {
     'intent': 'sale',
     'payer': {
       'payment_method': 'paypal',
