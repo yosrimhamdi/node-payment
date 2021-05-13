@@ -22,10 +22,22 @@ module.exports = async (req, res) => {
     },
     'transactions': [
       {
+        'item_list': {
+          'items': [
+            {
+              'name': 'dique dur externe',
+              'sku': 'this is the sku field', // product id
+              'price': '100',
+              'currency': 'USD',
+              'quantity': 2,
+            },
+          ],
+        },
         'amount': {
           'currency': 'USD',
-          'total': '100',
+          'total': '200',
         },
+        'description': 'This is the payment description.',
       },
     ],
   };

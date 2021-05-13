@@ -9,7 +9,7 @@ module.exports = (req, res) => {
       {
         'amount': {
           'currency': 'USD',
-          'total': '100',
+          'total': '200',
         },
       },
     ],
