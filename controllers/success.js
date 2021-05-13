@@ -1,28 +1,25 @@
 const paypal = require('paypal-rest-sdk');
 
 module.exports = (req, res) => {
-  const execute_payment_json = {
-    'payer_id': req.query.PayerID,
+  const { PayerID, paymentId } = req.query;
+
+  const config = {
+    'payer_id': PayerID,
     'transactions': [
       {
         'amount': {
           'currency': 'USD',
-          'total': '500',
+          'total': '100',
         },
       },
     ],
   };
 
-  paypal.payment.execute(
-    req.query.paymentId,
-    execute_payment_json,
-    function (error, payment) {
-      if (error) {
-        throw error;
-      } else {
-        console.log(payment);
-        res.send('Success');
-      }
-    },
-  );
+  paypal.payment.execute(paymentId, config, (e, payment) => {
+    if (e) {
+      res.status(500).json(e);
+    } else {
+      res.json(payment);
+    }
+  });
 };
