@@ -3,7 +3,7 @@ const paypal = require('paypal-rest-sdk');
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
 
 paypal.configure({
-  'mode': 'sandbox', //sandbox or live
+  'mode': 'sandbox', // sandbox or live
   'client_id': PAYPAL_CLIENT_ID,
   'client_secret': PAYPAL_CLIENT_SECRET,
 });
@@ -15,8 +15,8 @@ module.exports = async (req, res) => {
       'payment_method': 'paypal',
     },
     'redirect_urls': {
-      'return_url': 'http://localhost:3000/success',
-      'cancel_url': 'http://localhost:3000/failed',
+      'return_url': `${req.protocol}://${req.get('host')}/success`,
+      'cancel_url': `${req.protocol}://${req.get('host')}/failed`,
     },
     'transactions': [
       {
@@ -40,14 +40,17 @@ module.exports = async (req, res) => {
     ],
   };
 
+  console.log(`${req.protocol}://${req.get('host')}/success`);
+
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
-      res.send('error');
-      throw error;
+      res.status(500).json(error);
     } else {
-      console.log(payment);
+      const approval = payment.links.find(link => link.rel === 'approval_url');
 
-      res.redirect(payment.links[1].href);
+      console.log(approval);
+
+      res.redirect(approval.href);
     }
   });
 };
